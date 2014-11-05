@@ -1,0 +1,98 @@
+
+
+
+----------
+
+Some notes
+---------
+
+
+----------
+1.oracle date
+
+    SELECT TO_CHAR
+    (SYSDATE, 'MM-DD-YYYY HH24:MI:SS') "NOW"
+     FROM DUAL;
+
+
+----------
+2.check current oracle version
+
+    SELECT * FROM V$VERSION
+    
+    SELECT version FROM V$INSTANCE
+    BEGIN
+     
+    DBMS_OUTPUT.PUT_LINE(DBMS_DB_VERSION.VERSION || '.' ||     DBMS_DB_VERSION.RELEASE); 
+    END;
+    
+
+
+----------
+3. What is DBCP
+*Many Apache projects support interaction with a relational database. Creating a new connection for each user can be time consuming (often requiring multiple seconds of clock time), in order to perform a database transaction that might take milliseconds. Opening a connection per user can be unfeasible in a publicly-hosted Internet application where the number of simultaneous users can be very large. Accordingly, developers often wish to share a "pool" of open connections between all of the application's current users. The number of users actually performing a request at any given time is usually a very small percentage of the total number of active users, and during request processing is the only time that a database connection is required. The application itself logs into the DBMS, and handles any user account issues internally.*
+
+
+4 
+`<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%-- <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> --%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+      <ul>
+      <c:forEach var="albumList" items="${albumList}">
+       <li><a href="#">${albumList.albumId}</a></li>
+      </c:forEach>
+      </ul>
+</body>
+</html>`
+
+no c:tag will have error as following
+
+ 
+
+    org.apache.jasper.JasperException: An exception occurred processing JSP page /WEB-INF/jsp/StoreManager/index.jsp at line 16
+
+13:    
+14:       <ul>
+15:       <c:forEach var="albumList" items="${albumList}">
+16:        <li><a href="#">${albumList.title}</a></li>
+17:       </c:forEach>
+18:       </ul>
+19: </body>
+
+
+Stacktrace:
+	org.apache.jasper.servlet.JspServletWrapper.handleJspException(JspServletWrapper.java:521)
+	org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:430)
+	org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:313)
+	org.apache.jasper.servlet.JspServlet.service(JspServlet.java:260)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:717)
+	org.springframework.web.servlet.view.InternalResourceView.renderMergedOutputModel(InternalResourceView.java:238)
+	org.springframework.web.servlet.view.AbstractView.render(AbstractView.java:250)
+	org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1120)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:890)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:792)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:851)
+	org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:756)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:617)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:717)
+root cause
+
+java.lang.NumberFormatException: For input string: "title"
+	java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)
+
+
+
+
+  
+
+    
+
+
